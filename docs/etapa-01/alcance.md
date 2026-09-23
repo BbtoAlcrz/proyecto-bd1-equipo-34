@@ -1,4 +1,6 @@
-El alcance del sistema comienza por la gestión de artículos deportivos clasificados por 
+# Alcance Del Sistema
+
+El sistema comienza por la gestión de artículos deportivos clasificados por 
 categorías junto con datos de clientes y proveedores. El proceso de ventas incluye varios 
 métodos de pago, el registro de los artículos adquiridos y la emisión de factura al cliente, 
 actualizando el inventario y aplicando los descuentos correspondientes en las existencias 
