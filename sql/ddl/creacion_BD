@@ -1,8 +1,11 @@
 CREATE TABLE Oferta
 (
-  cod_oferta INT NOT NULL,
-  detalle_oferta VARCHAR(20) NOT NULL,
-  PRIMARY KEY (cod_oferta)
+  cod_oferta INT IDENTITY(1,1) NOT NULL,
+  detalle_oferta VARCHAR(150) NOT NULL,
+  fecha_lanzamiento DATE DEFAULT GETDATE() NOT NULL,
+  fecha_finalizacion DATE NULL,
+  CONSTRAINT PK_OFERTA PRIMARY KEY (cod_oferta),
+  CONSTRAINT CK_FECHA_OFERTA CHECK (fecha_lanzamiento <= fecha_finalizacion)
 );
 
 CREATE TABLE Notificacion
@@ -31,10 +34,10 @@ CREATE TABLE Cliente
 
 CREATE TABLE Categoria
 (
-  cod_categoria INT NOT NULL,
+  cod_categoria INT IDENTITY(1,1) NOT NULL,
   descripcion VARCHAR(50) NOT NULL,
   nombre_categoria VARCHAR(20) NOT NULL,
-  PRIMARY KEY (cod_categoria)
+  CONSTRAINT PK_CATEGORIA PRIMARY KEY (cod_categoria)
 );
 
 CREATE TABLE Proveedor
@@ -48,33 +51,11 @@ CREATE TABLE Proveedor
   UNIQUE (dni)
 );
 
-CREATE TABLE Aplicable
-(
-  cod_aplicable INT IDENTITY(1,1) NOT NULL,
-  porcentaje_descuento DECIMAL(7,2) NOT NULL,
-  porcentaje_recarga DECIMAL(7,2) NOT NULL,
-
-  CONSTRAINT PK_APLICABLE PRIMARY KEY (cod_aplicable)
-  CONSTRAINT CK_APLICABLE_DESCUENTO CHECK (porcentaje_descuento >= 0),
-  CONSTRAINT CK_APLICABLE_RECARGO CHECK (porcentaje_recarga >= 0)
-);
-
 CREATE TABLE Metodo_pago
 (
   cod_metodo INT IDENTITY(1,1) NOT NULL,
-  nombre_metodo_pago VARCHAR(20) NOT NULL,
-  cod_aplicable INT NULL,
-  CONSTRAINT PK_METODO_PAGO PRIMARY KEY (cod_metodo),
-  CONSTRAINT FK_METODOPAGO_APLICABLE FOREIGN KEY (cod_aplicable)
-  REFERENCES Aplicable (cod_aplicable)
-);
-
-CREATE TABLE Pago_venta
-(
-  cod_pago_venta INT NOT NULL,
-  cod_metodo INT NOT NULL,
-  PRIMARY KEY (cod_pago_venta),
-  FOREIGN KEY (cod_metodo) REFERENCES Metodo_pago(cod_metodo)
+  tipo_metodo VARCHAR(50) NOT NULL,
+  CONSTRAINT PK_METODO_PAGO PRIMARY KEY (cod_metodo)
 );
 
 CREATE TABLE Compra
