@@ -1,10 +1,12 @@
 # Implementacion  del sql
 
-Armamos una base de datos para un sistema de comercio, compras y ventas con \*\*13 tablas\*\*, organizadas en tres niveles jerárquicos para mantener los datos ordenados y evitar redundancias:
+Armamos una base de datos para un sistema de comercio, compras y ventas con 11 tablas relacionales, organizadas en tres niveles jerárquicos para mantener los datos ordenados y evitar redundancias:
 
-Nivel 1 (Catálogos y Tablas Base): Creamos primero las tablas independientes que no necesitan de otras para existir: `Cliente`, `Proveedor`, `Categoria`, `Oferta`, `Aplicable` 
-(descuentos y recargas), `Metodo_pago` y `Pago_venta`. A cada una le pusimos una clave primaria autoincremental (`INT IDENTITY(1,1)`) para que los identificadores se generen solos al insertar datos.
+Nivel 1 — Catálogos y Tablas Base: Comprende las entidades independientes del sistema: `Cliente`, `Proveedor`, `Categoria`, `Oferta` y `Metodo_pago`.
+Cada una de estas tablas utiliza una clave primaria autoincremental de tipo entero para la identificación automática y única de sus registros. 
 
-Nivel 2 (Tablas Intermedias): Creamos las tablas que gestionan las operaciones principales: `Producto`, `Compra`, `Venta` y `Notificacion`. 
+Nivel 2 — Tablas Intermedias de Operación: Contiene las entidades centrales que registran las transacciones de negocio: `Compra`, `Producto` y `Venta`. Estas tablas vinculan 
+los catálogos principales mediante claves foráneas y almacenan atributos operativos clave como precios totales, stocks y fechas. 
 
-Nivel 3 (Detalles de Operación): Creamos `Detalle_de_compra` y `Detalle_de_venta` para registrar ítem por ítem los productos incluidos en cada transacción.
+Nivel 3 — Tablas Asociativas y Detalles de Operación: Incluye las tablas `Detalle_de_compra`, `Detalle_de_venta` y `Notificacion`. Resuelven las relaciones de muchos a muchos (N:M) 
+entre las entidades principales, utilizando claves primarias compuestas por la combinación de las claves de las tablas padres.
