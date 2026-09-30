@@ -1,4 +1,4 @@
-#Implementacion  del sql
+# Implementacion  del sql
 
 Armamos una base de datos para un sistema de comercio, compras y ventas con \*\*13 tablas\*\*, organizadas en tres niveles jerárquicos para mantener los datos ordenados y evitar redundancias:
 
