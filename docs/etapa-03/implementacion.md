@@ -10,3 +10,8 @@ los catálogos principales mediante claves foráneas y almacenan atributos opera
 
 Nivel 3 — Tablas Asociativas y Detalles de Operación: Incluye las tablas `Detalle_de_compra`, `Detalle_de_venta` y `Notificacion`. Resuelven las relaciones de muchos a muchos (N:M) 
 entre las entidades principales, utilizando claves primarias compuestas por la combinación de las claves de las tablas padres.
+
+## Decisiones de Diseño Adaptadas 
+Identificadores Únicos: Se definieron llaves primarias numéricas simples para las entidades independientes, facilitando la indexación y velocidad de consulta. 
+Precisión en los Datos: Se seleccionaron tipos de datos específicos para prevenir inconsistencias: valores decimales para importes monetarios y porcentajes,
+tipos de fecha estrictos para el registro temporal, y cadenas de caracteres para teléfonos y correos.
