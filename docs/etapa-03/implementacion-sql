@@ -1,0 +1,131 @@
+CREATE TABLE Oferta
+(
+  cod_oferta INT NOT NULL,
+  detalle_oferta VARCHAR(20) NOT NULL,
+  PRIMARY KEY (cod_oferta)
+);
+
+CREATE TABLE Notificacion
+(
+  Nro_notificacion INT NOT NULL,
+  tipo_notificacion VARCHAR(20) NOT NULL,
+  cod_oferta INT NOT NULL,
+  PRIMARY KEY (Nro_notificacion),
+  FOREIGN KEY (cod_oferta) REFERENCES Oferta(cod_oferta)
+);
+
+CREATE TABLE Cliente
+(
+  Cod_cliente INT NOT NULL,
+  Nombre_cliente VARCHAR(30) NOT NULL,
+  Apellido_cliente VARCHAR(30) NOT NULL,
+  telefono INT NOT NULL,
+  Correo_electronico VARCHAR(30) NOT NULL,
+  dni INT NOT NULL,
+  Nro_notificacion INT NOT NULL,
+  PRIMARY KEY (Cod_cliente),
+  FOREIGN KEY (Nro_notificacion) REFERENCES Notificacion(Nro_notificacion),
+  UNIQUE (Correo_electronico),
+  UNIQUE (dni)
+);
+
+CREATE TABLE Categoria
+(
+  cod_categoria INT NOT NULL,
+  descripcion VARCHAR(50) NOT NULL,
+  nombre_categoria VARCHAR(20) NOT NULL,
+  PRIMARY KEY (cod_categoria)
+);
+
+CREATE TABLE Proveedor
+(
+  cod_proveedor INT NOT NULL,
+  nombre_proveedor VARCHAR(20) NOT NULL,
+  rubro VARCHAR(20) NOT NULL,
+  direccion VARCHAR(20) NOT NULL,
+  dni INT NOT NULL,
+  PRIMARY KEY (cod_proveedor),
+  UNIQUE (dni)
+);
+
+CREATE TABLE Aplicable
+(
+  cod_descuento INT NOT NULL,
+  porcentaje_descuento FLOAT NOT NULL,
+  porcentaje_recarga FLOAT NOT NULL,
+  PRIMARY KEY (cod_descuento)
+);
+
+CREATE TABLE Metodo_pago
+(
+  cod_metodo INT NOT NULL,
+  nombre_del_metodo VARCHAR(20) NOT NULL,
+  cod_descuento INT NOT NULL,
+  PRIMARY KEY (cod_metodo),
+  FOREIGN KEY (cod_descuento) REFERENCES Aplicable(cod_descuento)
+);
+
+CREATE TABLE Pago_venta
+(
+  cod_pago_venta INT NOT NULL,
+  cod_metodo INT NOT NULL,
+  PRIMARY KEY (cod_pago_venta),
+  FOREIGN KEY (cod_metodo) REFERENCES Metodo_pago(cod_metodo)
+);
+
+CREATE TABLE Compra
+(
+  cod_compra INT NOT NULL,
+  fecha_compra DATE NOT NULL,
+  precio_total FLOAT NOT NULL,
+  cod_proveedor INT NOT NULL,
+  PRIMARY KEY (cod_compra),
+  FOREIGN KEY (cod_proveedor) REFERENCES Proveedor(cod_proveedor)
+);
+
+CREATE TABLE Detalle_de_compra
+(
+  cod_detalle_compra INT NOT NULL,
+  precio_envio FLOAT NOT NULL,
+  precio_unitario FLOAT NOT NULL,
+  cod_compra INT NOT NULL,
+  PRIMARY KEY (cod_detalle_compra),
+  FOREIGN KEY (cod_compra) REFERENCES Compra(cod_compra)
+);
+
+CREATE TABLE Producto
+(
+  cod_producto INT NOT NULL,
+  nombre_producto VARCHAR(20) NOT NULL,
+  precio_compra FLOAT NOT NULL,
+  stock INT NOT NULL,
+  precio_venta FLOAT NOT NULL,
+  cod_categoria INT NOT NULL,
+  cod_detalle_compra INT NOT NULL,
+  PRIMARY KEY (cod_producto),
+  FOREIGN KEY (cod_categoria) REFERENCES Categoria(cod_categoria),
+  FOREIGN KEY (cod_detalle_compra) REFERENCES Detalle_de_compra(cod_detalle_compra)
+);
+
+CREATE TABLE Detalle_de_venta
+(
+  cod_detalle_venta INT NOT NULL,
+  precio_unitario FLOAT NOT NULL,
+  cod_producto INT NOT NULL,
+  PRIMARY KEY (cod_detalle_venta),
+  FOREIGN KEY (cod_producto) REFERENCES Producto(cod_producto)
+);
+
+CREATE TABLE Venta
+(
+  cod_venta INT NOT NULL,
+  fecha_venta INT NOT NULL,
+  precio_total FLOAT NOT NULL,
+  Cod_cliente INT NOT NULL,
+  cod_detalle_venta INT NOT NULL,
+  cod_pago_venta INT NOT NULL,
+  PRIMARY KEY (cod_venta),
+  FOREIGN KEY (Cod_cliente) REFERENCES Cliente(Cod_cliente),
+  FOREIGN KEY (cod_detalle_venta) REFERENCES Detalle_de_venta(cod_detalle_venta),
+  FOREIGN KEY (cod_pago_venta) REFERENCES Pago_venta(cod_pago_venta)
+);
