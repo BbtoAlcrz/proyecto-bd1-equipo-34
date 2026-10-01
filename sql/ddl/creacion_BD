@@ -4,33 +4,32 @@ CREATE TABLE Oferta
   detalle_oferta VARCHAR(150) NOT NULL,
   fecha_lanzamiento DATE DEFAULT GETDATE() NOT NULL,
   fecha_finalizacion DATE NULL,
-  CONSTRAINT PK_OFERTA PRIMARY KEY (cod_oferta),
+  CONSTRAINT PK_Oferta PRIMARY KEY (cod_oferta),
   CONSTRAINT CK_FECHA_OFERTA CHECK (fecha_lanzamiento <= fecha_finalizacion)
-);
-
-CREATE TABLE Notificacion
-(
-  cod_cliente INT NOT NULL,
-	cod_oferta INT NOT NULL,
-	estado_notificacion VARCHAR (15) DEFAULT ‘ENVIADA’,
-	CONSTRAINT PK_Notificacion PRIMARY KEY (cod_cliente, cod_oferta),
-  CONSTRAINT FK_Notificacion_Cliente FOREIGN KEY (cod_cliente) REFERENCES Cliente (cod_cliente),
-  CONSTRAINT FK_Notificacion_Oferta FOREIGN KEY (cod_oferta) REFERENCES Oferta (cod_oferta),
-  CONSTRAINT CK_Notificacion_Estado CHECK (estado_notificacion IN (‘ENVIADA’, ‘LEIDA’))
-
 );
 
 CREATE TABLE Cliente
 (
   cod_cliente INT IDENTITY (1,1) NOT NULL,
   nombre_cliente VARCHAR(50) NOT NULL,
-  Apellido_cliente VARCHAR(50) NOT NULL,
+  apellido_cliente VARCHAR(50) NOT NULL,
   dni INT NOT NULL,
   telefono VARCHAR (50) NOT NULL,
   correo_electronico VARCHAR(50) NOT NULL,
-  CONSTRAINT PK_Cliente PRIMARY KEY (Cod_cliente),
+  CONSTRAINT PK_Cliente PRIMARY KEY (cod_cliente),
   CONSTRAINT UQ_Cliente_Correo UNIQUE (correo_electronico),
   CONSTRAINT UQ_Cliente_Dni UNIQUE (dni)
+);
+
+CREATE TABLE Notificacion
+(
+  cod_cliente INT NOT NULL,
+  cod_oferta INT NOT NULL,
+  estado_notificacion VARCHAR (15) DEFAULT 'ENVIADA',
+  CONSTRAINT PK_Notificacion PRIMARY KEY (cod_cliente, cod_oferta),
+  CONSTRAINT FK_Notificacion_Cliente FOREIGN KEY (cod_cliente) REFERENCES Cliente (cod_cliente),
+  CONSTRAINT FK_Notificacion_Oferta FOREIGN KEY (cod_oferta) REFERENCES Oferta (cod_oferta),
+  CONSTRAINT CK_Notificacion_Estado CHECK (estado_notificacion IN ('ENVIADA', 'LEIDA'))
 );
 
 CREATE TABLE Categoria
@@ -38,7 +37,7 @@ CREATE TABLE Categoria
   cod_categoria INT IDENTITY(1,1) NOT NULL,
   descripcion VARCHAR(50) NOT NULL,
   nombre_categoria VARCHAR(20) NOT NULL,
-  CONSTRAINT PK_CATEGORIA PRIMARY KEY (cod_categoria)
+  CONSTRAINT PK_Categoria PRIMARY KEY (cod_categoria)
 );
 
 CREATE TABLE Proveedor
@@ -48,7 +47,7 @@ CREATE TABLE Proveedor
   rubro VARCHAR(50) NOT NULL,
   direccion VARCHAR(50) NOT NULL,
   telefono VARCHAR(50) NOT NULL,
-  cuit INT NOT NULL,
+  cuit VARCHAR(11) NOT NULL, -- Corregido de INT a VARCHAR(11)[cite: 4, 6]
   CONSTRAINT PK_Proveedor PRIMARY KEY (cod_proveedor),
   CONSTRAINT UQ_Proveedor_Cuit UNIQUE (cuit)
 );
@@ -57,7 +56,7 @@ CREATE TABLE Metodo_pago
 (
   cod_metodo INT IDENTITY(1,1) NOT NULL,
   tipo_metodo VARCHAR(50) NOT NULL,
-  CONSTRAINT PK_METODO_PAGO PRIMARY KEY (cod_metodo)
+  CONSTRAINT PK_Metodo_pago PRIMARY KEY (cod_metodo)
 );
 
 CREATE TABLE Compra
@@ -69,18 +68,6 @@ CREATE TABLE Compra
   cod_proveedor INT NOT NULL,
   CONSTRAINT PK_Compra PRIMARY KEY (cod_compra),
   CONSTRAINT FK_Compra_Proveedor FOREIGN KEY (cod_proveedor) REFERENCES Proveedor(cod_proveedor)
-);
-
-CREATE TABLE Detalle_de_compra
-(
-  cod_compra INT NOT NULL,
-  cod_producto INT NOT NULL,
-  precio_unitario DECIMAL (10,2) NOT NULL,
-	cantidad INT NOT NULL,
-	CONSTRAINT PK_Detalle_de_compra PRIMARY KEY (cod_compra, cod_producto),
-	CONSTRAINT FK_Detalle_de_compra_Compra FOREIGN KEY (cod_compra) REFERENCES Compra (cod_compra),
-  CONSTRAINT FK_Detalle_de_compra_Producto FOREIGN KEY (cod_producto) REFERENCES Producto (cod_producto)
-  CONSTRAINT CK_Detalle_de_compra_Cantidad CHECK (cantidad > 0)
 );
 
 CREATE TABLE Producto
@@ -96,28 +83,41 @@ CREATE TABLE Producto
   CONSTRAINT CK_Producto_Stock CHECK (stock >= 0)
 );
 
-CREATE TABLE Detalle_de_venta
+CREATE TABLE Detalle_de_compra
 (
+  cod_compra INT NOT NULL,
   cod_producto INT NOT NULL,
-	cod_venta INT NOT NULL,
-	precio_unitario DECIMAL (10,2) NOT NULL,
-	cantidad INT NOT NULL,
-	CONSTRAINT PK_Detalle_de_venta PRIMARY KEY (cod_producto, cod_venta),
-	CONSTRAINT FK_Detalle_de_venta_Producto FOREIGN KEY (cod_producto) REFERENCES Producto (cod_producto),
-	CONSTRAINT FK_Detalle_de_venta_Venta FOREIGN KEY (cod_venta) REFERENCES Venta (cod_venta)
+  precio_unitario DECIMAL (10,2) NOT NULL,
+  cantidad INT NOT NULL,
+  CONSTRAINT PK_Detalle_de_compra PRIMARY KEY (cod_compra, cod_producto),
+  CONSTRAINT FK_Detalle_de_compra_Compra FOREIGN KEY (cod_compra) REFERENCES Compra (cod_compra),
+  CONSTRAINT FK_Detalle_de_compra_Producto FOREIGN KEY (cod_producto) REFERENCES Producto (cod_producto),
   CONSTRAINT CK_Detalle_de_compra_Cantidad CHECK (cantidad > 0)
 );
 
 CREATE TABLE Venta
 (
   cod_venta INT IDENTITY (1,1) NOT NULL,
-	fecha_venta DATE NOT NULL,
-	precio_total DECIMAL (10,2) NOT NULL,
-	subtotal DECIMAL (10,2) NOT NULL,
-	aplicable DECIMAL (10,2) DEFAULT 0.00,
- 	cod_cliente INT NOT NULL,
-	cod_metodo INT NOT NULL,
-	CONSTRAINT PK_Venta PRIMARY KEY (cod_venta),
-	CONSTRAINT FK_Venta_Cliente FOREIGN KEY (cod_cliente) REFERENCES Cliente (cod_cliente),
-  CONSTRAINT FK_Venta_Metodo FOREIGN KEY (cod_metodo) REFERENCES Metodo_Pago (cod_metodo) 
+  fecha_venta DATE NOT NULL,
+  precio_total DECIMAL (10,2) NOT NULL,
+  subtotal DECIMAL (10,2) NOT NULL,
+  aplicable DECIMAL (10,2) DEFAULT 0.00,
+  cod_cliente INT NOT NULL,
+  cod_metodo INT NOT NULL,
+  CONSTRAINT PK_Venta PRIMARY KEY (cod_venta),
+  CONSTRAINT FK_Venta_Cliente FOREIGN KEY (cod_cliente) REFERENCES Cliente (cod_cliente),
+  CONSTRAINT FK_Venta_Metodo FOREIGN KEY (cod_metodo) REFERENCES Metodo_pago (cod_metodo)
 );
+
+CREATE TABLE Detalle_de_venta
+(
+  cod_producto INT NOT NULL,
+  cod_venta INT NOT NULL,
+  precio_unitario DECIMAL (10,2) NOT NULL,
+  cantidad INT NOT NULL,
+  CONSTRAINT PK_Detalle_de_venta PRIMARY KEY (cod_producto, cod_venta),
+  CONSTRAINT FK_Detalle_de_venta_Producto FOREIGN KEY (cod_producto) REFERENCES Producto (cod_producto),
+  CONSTRAINT FK_Detalle_de_venta_Venta FOREIGN KEY (cod_venta) REFERENCES Venta (cod_venta),
+  CONSTRAINT CK_Detalle_de_venta_Cantidad CHECK (cantidad > 0) -- Nombre de restricción corregido[cite: 6]
+);
+
