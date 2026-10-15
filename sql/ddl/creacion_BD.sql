@@ -47,7 +47,7 @@ CREATE TABLE Proveedor
   rubro VARCHAR(50) NOT NULL,
   direccion VARCHAR(50) NOT NULL,
   telefono VARCHAR(50) NOT NULL,
-  cuit VARCHAR(11) NOT NULL, -- Corregido de INT a VARCHAR(11)[cite: 4, 6]
+  cuit VARCHAR(11) NOT NULL,
   CONSTRAINT PK_Proveedor PRIMARY KEY (cod_proveedor),
   CONSTRAINT UQ_Proveedor_Cuit UNIQUE (cuit)
 );
@@ -73,7 +73,7 @@ CREATE TABLE Compra
 CREATE TABLE Producto
 (
   cod_producto INT IDENTITY(1,1) NOT NULL,
-  nombre_producto VARCHAR(20) NOT NULL,
+  nombre_producto VARCHAR(80) NOT NULL,
   precio_compra DECIMAL(10,2) NOT NULL,
   stock INT NOT NULL,
   precio_venta DECIMAL(10,2) NOT NULL,
@@ -118,6 +118,6 @@ CREATE TABLE Detalle_de_venta
   CONSTRAINT PK_Detalle_de_venta PRIMARY KEY (cod_producto, cod_venta),
   CONSTRAINT FK_Detalle_de_venta_Producto FOREIGN KEY (cod_producto) REFERENCES Producto (cod_producto),
   CONSTRAINT FK_Detalle_de_venta_Venta FOREIGN KEY (cod_venta) REFERENCES Venta (cod_venta),
-  CONSTRAINT CK_Detalle_de_venta_Cantidad CHECK (cantidad > 0) -- Nombre de restricción corregido[cite: 6]
+  CONSTRAINT CK_Detalle_de_venta_Cantidad CHECK (cantidad > 0)
 );
 
