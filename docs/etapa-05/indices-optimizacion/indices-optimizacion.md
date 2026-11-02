@@ -36,7 +36,6 @@ Para tener disponibles en todo momento los datos del desempeño de las consultas
 ```SQL
 SET STATISTICS TIME ON;
 SET STATISTICS IO ON;
-GO
 ```
 
 Se realizó la consulta de búsqueda trimestral a la Base de Datos
@@ -48,6 +47,8 @@ Y se registró la siguiente información:
 | Lecturas Lógicas | 5209 |
 | Porcentaje de Uso de la Consulta| 99% |
 | Operación Principal | **Recorrido de Tabla** |
+
+![table_scan](table_scan.png)
 
 ## Prueba 2: Consulta con Índice Agrupado (Clustered)
 
@@ -75,6 +76,8 @@ Se registró la siguiente información:
 | Lecturas Lógicas | 323 |
 | Porcentaje de Uso de la Consulta| 1% |
 | Operación Principal | **Búsqueda de Índice agrupado** |
+
+![Índice agrupado](indice_clustered.png)
 
 ## Prueba 3: Consulta con Índice No Agrupado y Cobertura
 **Datos a considerar:**
@@ -107,6 +110,8 @@ Se registró la siguiente información:
 | Lecturas Lógicas | 245 |
 | Porcentaje de Uso de la Consulta| 0% |
 | Operación Principal | **Index Seek (NonClustered)** |
+
+![Índice No Agrupado](indice_nonclustered.png)
 
 ## Resultados y Comparaciones
 
