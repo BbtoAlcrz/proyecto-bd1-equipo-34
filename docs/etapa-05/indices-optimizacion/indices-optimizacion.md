@@ -48,7 +48,7 @@ Y se registró la siguiente información:
 | Porcentaje de Uso de la Consulta| 99% |
 | Operación Principal | **Recorrido de Tabla** |
 
-![table_scan](table_scan.png)
+![table_scan](img/table_scan.png)
 
 ## Prueba 2: Consulta con Índice Agrupado (Clustered)
 
@@ -77,7 +77,7 @@ Se registró la siguiente información:
 | Porcentaje de Uso de la Consulta| 1% |
 | Operación Principal | **Búsqueda de Índice agrupado** |
 
-![Índice agrupado](indice_clustered.png)
+![Índice agrupado](img/indice_clustered.png)
 
 ## Prueba 3: Consulta con Índice No Agrupado y Cobertura
 **Datos a considerar:**
@@ -111,7 +111,7 @@ Se registró la siguiente información:
 | Porcentaje de Uso de la Consulta| 0% |
 | Operación Principal | **Index Seek (NonClustered)** |
 
-![Índice No Agrupado](indice_nonclustered.png)
+![Índice No Agrupado](img/indice_nonclustered.png)
 
 ## Resultados y Comparaciones
 
