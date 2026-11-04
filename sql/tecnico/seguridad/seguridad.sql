@@ -1,4 +1,18 @@
 /* ============================================================
+   0. VERIFICAR MODO DE AUTENTICACIÓN (mixto)
+   Resultado esperado: Modo mixto (Windows + SQL Server)
+   ============================================================ */
+SELECT CASE SERVERPROPERTY('IsIntegratedSecurityOnly')
+         WHEN 0 THEN 'Modo mixto (Windows + SQL Server)'
+         WHEN 1 THEN 'Solo autenticación de Windows'
+       END AS modo_autenticacion;
+GO
+ 
+ 
+USE NOMBRE_TU_BD;
+GO
+ 
+/* ============================================================
    1. PROCEDIMIENTO ALMACENADO
    (si ya existe el de tu equipo, usá ese en los pasos 4 y 6)
    ============================================================ */
@@ -14,7 +28,6 @@ BEGIN
     VALUES (GETDATE(), @Total, @Total, @cod_cliente, @cod_metodo);
 END;
 GO
- 
  
 /* ============================================================
    2. CREACIÓN DE LOGINS Y USUARIOS
@@ -117,7 +130,8 @@ GO
    ============================================================ */
  
 -- ---------- Prueba 1a: INSERT directo con ADMIN -> CORRECTO ----------
--- Esperado: (1 row affected)
+-- Esperado: dos mensajes "(1 row affected)": uno del SELECT USER_NAME()
+-- y otro del INSERT.
 EXECUTE AS USER = 'usuario_admin';
 SELECT USER_NAME() AS usuario_actual;
 INSERT INTO dbo.Venta (fecha_venta, precio_total, subtotal, cod_cliente, cod_metodo)
@@ -135,7 +149,9 @@ REVERT;
 GO
  
 -- ---------- Prueba 2: INSERT por PROCEDIMIENTO con LECTOR -> CORRECTO ----------
--- Esperado: (1 row affected)
+-- Esperado: sin errores. El procedimiento usa SET NOCOUNT ON, por eso no
+-- muestra "filas afectadas" del INSERT (solo la del SELECT USER_NAME()).
+-- La venta nueva se comprueba con el SELECT TOP 3 siguiente.
 EXECUTE AS USER = 'usuario_lector';
 SELECT USER_NAME() AS usuario_actual;
 EXEC dbo.sp_RegistrarVentaSimple
@@ -187,4 +203,5 @@ GO
    ============================================================ */
 SELECT * FROM dbo.Venta;
 GO
+ 
  
