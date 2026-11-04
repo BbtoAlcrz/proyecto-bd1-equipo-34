@@ -38,15 +38,15 @@ Si la actualización de stock falla (por ejemplo, por no disponer del stock mín
 * **Resultado:** Se creó la venta, el detalle correspondiente y el stock disminuyó de 15 a 13 unidades.
 * **Comprobación:** Confirmación mediante `COMMIT TRANSACTION`.
 
-![Evidencia antes de la transaccion](img/antes_transaccion.png)
-![Evidencia luego de la transaccion exitosa](img/despues_transaccion_exitosa.png)
+![Evidencia antes de la transaccion](img/antes_transaccion.jpeg)
+![Evidencia luego de la transaccion exitosa](img/despues_transaccion_exitosa.jpeg)
 
 ### Prueba 2: Error Intencional y Verificación de Atomicidad
 * **Escenario:** Intento de venta de 999 unidades del producto ID 1 (superior al stock disponible de 13 unidades).
 * **Resultado Esperado:** Al ejecutar el `UPDATE`, el motor de BD detecta la violación de la restricción `CK_Producto_Stock`. El control pasa inmediatamente al bloque `CATCH` y ejecuta un `ROLLBACK`.
 * **Evidencia:** Ni la `Venta` ni el `Detalle_de_venta` se insertaron en la base de datos. El total de registros en la tabla `Venta` se mantuvo inalterado.
 
-![Evidencia luego de la transaccion erronea](img/despues_transaccion_erronea.png)
+![Evidencia luego de la transaccion erronea](img/despues_transaccion_errone.jpeg)
 
 ---
 
