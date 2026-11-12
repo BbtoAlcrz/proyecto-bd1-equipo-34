@@ -77,7 +77,7 @@ Se desarrollaron consultas SQL orientadas a representar distintas necesidades de
 
 ### Etapa 05 - Optimización y conceptos avanzados
 
-Se exploraron mecanismos de optimización mediante índices, comparando el rendimiento de consultas bajo distintas configuraciones. También se abordaron conceptos relacionados con procedimientos almacenados y funciones. [Ver documentación de la Etapa 05](docs/etapa-05/)
+Se exploraron mecanismos de optimización mediante índices, comparando el rendimiento de consultas bajo distintas configuraciones. También se implementaron procedimientos y funciones almacenadas, transacciones con manejo de errores, triggers de auditoría y seguridad mediante usuarios, roles y permisos. [Ver documentación de la Etapa 05](docs/etapa-05/)
 
 ## 7. Estructura del repositorio
 
@@ -167,6 +167,20 @@ Una vez creada la estructura:
 Con la estructura creada y los datos cargados, es posible ejecutar las consultas disponibles en `sql/consultas/` [ver consultas disponibles](https://github.com/BbtoAlcrz/proyecto-bd1-equipo-34/tree/main/sql/consultas).
 Cada archivo contiene una consulta SQL orientada a resolver una necesidad de información específica del negocio.
 > **Importante:** Verificar que la instancia de SQL Server esté correctamente configurada antes de comenzar.
+
+### 8.6. Ejecutar los scripts técnicos
+
+Con la base creada y los datos cargados, los scripts de `sql/tecnico/` pueden ejecutarse en cualquier orden. Cada uno incluye su propia demostración y puede ejecutarse más de una vez.
+
+| Script | Tema |
+|---|---|
+| `optimizacion-consultas/optimizacion-consultas.sql` | Índices y optimización de consultas |
+| `procedimientos-almacenados/proc_func_almacenados.sql` | Procedimientos y funciones almacenadas |
+| `transacciones/transaccion.sql` | Transacciones con `TRY...CATCH` |
+| `triggers-auditoria/triggers-auditoria.sql` | Triggers de auditoría |
+| `seguridad/seguridad.sql` | Usuarios, roles y permisos |
+
+> **Nota:** `seguridad.sql` requiere que la instancia esté en modo de autenticación mixto. Algunos scripts (transacciones, seguridad y triggers) modifican los datos, por lo que las consultas de `sql/consultas/` pueden devolver resultados distintos a los documentados si se ejecutan después.
 
 ## 9. Consultas y casos de uso destacados
 
