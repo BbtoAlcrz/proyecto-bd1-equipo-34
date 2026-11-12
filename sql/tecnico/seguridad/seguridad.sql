@@ -16,7 +16,7 @@ GO
    1. PROCEDIMIENTO ALMACENADO
    (si ya existe el de tu equipo, usá ese en los pasos 4 y 6)
    ============================================================ */
-CREATE PROCEDURE dbo.sp_RegistrarVentaSimple
+CREATE OR ALTER PROCEDURE dbo.sp_RegistrarVentaSimple
     @cod_cliente INT,
     @cod_metodo  INT,
     @Total       DECIMAL(10,2)
@@ -33,16 +33,24 @@ GO
    2. CREACIÓN DE LOGINS Y USUARIOS
    (las contraseñas son de ejemplo)
    ============================================================ */
-CREATE LOGIN usuario_admin   WITH PASSWORD = 'Admin123*';
-CREATE LOGIN usuario_lector  WITH PASSWORD = 'Lector123*';
-CREATE LOGIN usuario_con_rol WITH PASSWORD = 'Rol123*';
-CREATE LOGIN usuario_sin_rol WITH PASSWORD = 'Rol456*';
+IF NOT EXISTS (SELECT 1 FROM sys.server_principals WHERE name = 'usuario_admin')
+    CREATE LOGIN usuario_admin   WITH PASSWORD = 'Admin123*';
+IF NOT EXISTS (SELECT 1 FROM sys.server_principals WHERE name = 'usuario_lector')
+    CREATE LOGIN usuario_lector  WITH PASSWORD = 'Lector123*';
+IF NOT EXISTS (SELECT 1 FROM sys.server_principals WHERE name = 'usuario_con_rol')
+    CREATE LOGIN usuario_con_rol WITH PASSWORD = 'Rol123*';
+IF NOT EXISTS (SELECT 1 FROM sys.server_principals WHERE name = 'usuario_sin_rol')
+    CREATE LOGIN usuario_sin_rol WITH PASSWORD = 'Rol456*';
 GO
  
-CREATE USER usuario_admin   FOR LOGIN usuario_admin;
-CREATE USER usuario_lector  FOR LOGIN usuario_lector;
-CREATE USER usuario_con_rol FOR LOGIN usuario_con_rol;
-CREATE USER usuario_sin_rol FOR LOGIN usuario_sin_rol;
+IF NOT EXISTS (SELECT 1 FROM sys.database_principals WHERE name = 'usuario_admin')
+    CREATE USER usuario_admin   FOR LOGIN usuario_admin;
+IF NOT EXISTS (SELECT 1 FROM sys.database_principals WHERE name = 'usuario_lector')
+    CREATE USER usuario_lector  FOR LOGIN usuario_lector;
+IF NOT EXISTS (SELECT 1 FROM sys.database_principals WHERE name = 'usuario_con_rol')
+    CREATE USER usuario_con_rol FOR LOGIN usuario_con_rol;
+IF NOT EXISTS (SELECT 1 FROM sys.database_principals WHERE name = 'usuario_sin_rol')
+    CREATE USER usuario_sin_rol FOR LOGIN usuario_sin_rol;
 GO
  
 -- Verificación: debe devolver 4 filas de tipo SQL_USER
@@ -70,7 +78,8 @@ GO
 /* ============================================================
    4. PARTE 2: PERMISOS A NIVEL DE ROL
    ============================================================ */
-CREATE ROLE rol_consulta_productos;
+IF NOT EXISTS (SELECT 1 FROM sys.database_principals WHERE name = 'rol_consulta_productos')
+    CREATE ROLE rol_consulta_productos;
 GO
  
 GRANT SELECT ON dbo.Producto TO rol_consulta_productos;
