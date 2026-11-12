@@ -8,7 +8,7 @@ GO
 DECLARE @cod_cliente INT = 1;
 DECLARE @cod_metodo INT = 1;
 DECLARE @cod_producto INT = 1;
-DECLARE @cantidad INT = 99; -- cantidad de stock correcta (PARA UN ERROR, lo ponemos en 999 por ej)
+DECLARE @cantidad INT = 2; -- caso correcto (stock 15 -> 13). Para el caso con error usar 999
 DECLARE @precio_unitario DECIMAL(10,2) = 60800.00;
 DECLARE @aplicable DECIMAL(10,2) = 0.00;
 
