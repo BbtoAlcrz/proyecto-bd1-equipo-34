@@ -10,7 +10,7 @@ Identifica las notificaciones de promociones o descuentos que fueron enviadas a 
 - **Parametrización**: El estado de notificación y el rango de fechas pueden adaptarse según el ciclo de vida de la campaña de email marketing.
 
 ### Código SQL
-[ofertas_sin_leer.sql](https://github.com/BbtoAlcrz/proyecto-bd1-equipo-34/blob/main/sql/consultas/ofertas_sin_leer.sql.sql)
+[ofertas_sin_leer.sql](https://github.com/BbtoAlcrz/proyecto-bd1-equipo-34/blob/main/sql/consultas/ofertas_sin_leer.sql)
 
 ### Resultado esperado
 (Consulta ejecutada sobre ofertas cuya fecha de finalización es superior a la fecha actual)
