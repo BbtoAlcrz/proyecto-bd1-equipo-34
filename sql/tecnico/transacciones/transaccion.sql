@@ -1,3 +1,6 @@
+USE Proyecto_BD1;
+GO
+
 -- Manejo de Transacciones y Transacciones Anidadas
 
 -- Modificar estos valores para alternar entre la Prueba Correcta e Incorrecta

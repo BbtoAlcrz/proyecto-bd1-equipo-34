@@ -9,7 +9,7 @@ SELECT CASE SERVERPROPERTY('IsIntegratedSecurityOnly')
 GO
  
  
-USE NOMBRE_TU_BD;
+USE Proyecto_BD1;
 GO
  
 /* ============================================================

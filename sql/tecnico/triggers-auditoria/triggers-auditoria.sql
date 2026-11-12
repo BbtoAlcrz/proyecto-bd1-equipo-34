@@ -1,4 +1,4 @@
-USE Pryecto_BD1;
+USE Proyecto_BD1;
 GO
 
 /*trigger de auditoria sobre la tabla Producto: registra los cambios de precio_venta*/

@@ -1,3 +1,6 @@
+USE Proyecto_BD1;
+GO
+
 -- Parte 1: Creación de tabla sin Primary Key ni Índice (Heap)
 CREATE TABLE VentaPruebaHistorica 
 (

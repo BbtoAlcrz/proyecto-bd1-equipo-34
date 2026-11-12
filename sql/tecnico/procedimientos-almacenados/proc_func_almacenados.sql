@@ -1,3 +1,6 @@
+USE Proyecto_BD1;
+GO
+
 /*crear una funcion sobre gasto de los proveedores, permite el ingreso de un parametro que define el minimo*/
 CREATE FUNCTION dbo.fn_ObtenerProveedoresConGastoMinimo (@MinimoGasto DECIMAL(10,2))
 RETURNS TABLE

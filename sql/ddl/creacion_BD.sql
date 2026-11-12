@@ -1,3 +1,9 @@
+IF DB_ID('Proyecto_BD1') IS NULL
+    CREATE DATABASE Proyecto_BD1;
+GO
+USE Proyecto_BD1;
+GO
+
 CREATE TABLE Oferta
 (
   cod_oferta INT IDENTITY(1,1) NOT NULL,
