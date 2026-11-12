@@ -50,18 +50,22 @@ SET STATISTICS IO ON;
 GO
 
 -- PRUEBA 1: Consulta por rango de fechas SIN ÍNDICE (Recorrido de Tabla)
+PRINT '--- PRUEBA 1: SIN INDICE ---';
 SELECT cod_venta, fecha_venta, precio_total, cod_cliente
 FROM VentaPruebaHistorica
 WHERE fecha_venta BETWEEN '2024-01-01' AND '2024-03-31';
 GO
 
 
--- Parte 4: Cracion de índice agrupado
+-- Parte 4: Creacion de índice agrupado
+-- (crear el índice también lee toda la tabla, por eso aparecen lecturas antes de la Prueba 2)
+PRINT '--- Creando indice agrupado ---';
 CREATE CLUSTERED INDEX IX_VentaPrueba_Fecha 
 ON VentaPruebaHistorica(fecha_venta);
 GO
 
 -- PRUEBA 2: Consulta con Índice Agrupado (Clustered)
+PRINT '--- PRUEBA 2: INDICE AGRUPADO ---';
 SELECT cod_venta, fecha_venta, precio_total, cod_cliente
 FROM VentaPruebaHistorica
 WHERE fecha_venta BETWEEN '2024-01-01' AND '2024-03-31';
@@ -69,6 +73,7 @@ GO
 
 
 -- Parte 5: Eliminamos el índice agrupado previo para probar la siguiente variante
+PRINT '--- Cambiando al indice con cobertura ---';
 DROP INDEX IX_VentaPrueba_Fecha ON VentaPruebaHistorica;
 GO
 
@@ -79,7 +84,13 @@ INCLUDE (cod_venta, precio_total, cod_cliente);
 GO
 
 -- PRUEBA 3: Consulta con Índice NO Agrupado + Cobertura
+PRINT '--- PRUEBA 3: INDICE CON COBERTURA ---';
 SELECT cod_venta, fecha_venta, precio_total, cod_cliente
 FROM VentaPruebaHistorica
 WHERE fecha_venta BETWEEN '2024-01-01' AND '2024-03-31';
+GO
+
+-- Se desactivan las estadísticas para no afectar a los scripts que se ejecuten después
+SET STATISTICS TIME OFF;
+SET STATISTICS IO OFF;
 GO
