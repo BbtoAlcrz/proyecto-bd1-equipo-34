@@ -6,7 +6,7 @@ Identifica las notificaciones de promociones o descuentos que fueron enviadas a 
 
 ### Estrategia SQL
 - **`JOINs`**: Vincula `Notificacion` con `Cliente` y `Oferta` para obtener los datos del destinatario y el detalle de la promoción.
-- **Filtro `WHERE` con función temporal**: Filtra por el estado `'ENVIADA'` y evalúa vigencia mediante `o.fecha_finalizacion >= GETDATE()`.
+- **Filtro `WHERE` con función temporal**: Filtra por el estado `'ENVIADA'` y evalúa vigencia: incluye las ofertas sin fecha de finalización (`IS NULL`, vigentes sin límite) y compara contra la fecha actual sin hora (`CAST(GETDATE() AS DATE)`), para que una oferta siga vigente durante todo su último día.
 - **Parametrización**: El estado de notificación y el rango de fechas pueden adaptarse según el ciclo de vida de la campaña de email marketing.
 
 ### Código SQL

@@ -10,4 +10,4 @@ FROM Notificacion n
 JOIN Cliente c ON n.cod_cliente = c.cod_cliente
 JOIN Oferta o ON n.cod_oferta = o.cod_oferta
 WHERE n.estado_notificacion = 'ENVIADA'
-  AND o.fecha_finalizacion >= GETDATE();
+  AND (o.fecha_finalizacion IS NULL OR o.fecha_finalizacion >= CAST(GETDATE() AS DATE));
