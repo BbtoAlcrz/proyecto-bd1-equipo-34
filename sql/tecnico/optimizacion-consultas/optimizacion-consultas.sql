@@ -2,6 +2,10 @@ USE Proyecto_BD1;
 GO
 
 -- Parte 1: Creación de tabla sin Primary Key ni Índice (Heap)
+-- Se elimina si ya existe para poder repetir la prueba desde cero
+DROP TABLE IF EXISTS VentaPruebaHistorica;
+GO
+
 CREATE TABLE VentaPruebaHistorica 
 (
     cod_venta BIGINT IDENTITY(1,1),
