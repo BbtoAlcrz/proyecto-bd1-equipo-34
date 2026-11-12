@@ -1,7 +1,7 @@
 # Base de Datos - Tienda de Artículos Deportivos
 
 [![Alcance](https://img.shields.io/badge/Alcance-Académico-blue)]()
-[![Estado](https://img.shields.io/badge/Estado-En_proceso-yellow)]()
+[![Estado](https://img.shields.io/badge/Estado-Finalizado-brightgreen)]()
 [![Motor](https://img.shields.io/badge/SQL-SQLServer-red)]()
 
 ## 1. Presentación y contexto

@@ -13,10 +13,10 @@ Identifica las notificaciones de promociones o descuentos que fueron enviadas a 
 [ofertas_sin_leer.sql](https://github.com/BbtoAlcrz/proyecto-bd1-equipo-34/blob/main/sql/consultas/ofertas_sin_leer.sql)
 
 ### Resultado esperado
-(Consulta ejecutada sobre ofertas cuya fecha de finalización es superior a la fecha actual)
+(Resultado al 12/11/2026. Como la vigencia se compara con la fecha actual, el resultado cambia según el día en que se ejecute la consulta.)
 
 | cod_oferta | detalle_oferta | cod_cliente | nombre_cliente | apellido_cliente | estado_notificacion |
 | :---: | :--- | :---: | :--- | :--- | :---: |
+| 1 | 5% OFF en tu primera compra | 1 | Juan | Pérez | ENVIADA |
 | 3 | Especial Verano: 2x1 en musculosas y shorts deportivos | 3 | Carlos | López | ENVIADA |
-| 5 | Especial día de la Madre: 20% OFF en conjuntos deportivos, tops y calzas | 5 | Pedro | Sánchez | ENVIADA |
 | 7 | Combo Rendimiento: 15% OFF llevando PROTEÍNA + CREATINA | 7 | Diego | Romero | ENVIADA |
