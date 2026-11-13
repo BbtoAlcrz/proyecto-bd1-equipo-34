@@ -14,7 +14,7 @@ GO
  
 /* ============================================================
    1. PROCEDIMIENTO ALMACENADO
-   (si ya existe el de tu equipo, usá ese en los pasos 4 y 6)
+   Registra una venta; se usa para demostrar ownership chaining
    ============================================================ */
 CREATE OR ALTER PROCEDURE dbo.sp_RegistrarVentaSimple
     @cod_cliente INT,
@@ -134,8 +134,7 @@ GO
  
 /* ============================================================
    7. PRUEBAS
-   Ajustar cod_cliente y cod_metodo (1, 1) si en tu base los
-   códigos son otros.
+   Se usa el cliente 1 y el método de pago 1 de los datos de prueba
    ============================================================ */
  
 -- ---------- Prueba 1a: INSERT directo con ADMIN -> CORRECTO ----------
