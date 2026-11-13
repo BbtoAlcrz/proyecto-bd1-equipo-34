@@ -1,9 +1,11 @@
-USE Pryecto_BD1;
+USE Proyecto_BD1;
 GO
 
 /*trigger de auditoria sobre la tabla Producto: registra los cambios de precio_venta*/
 /*tabla espejo donde se guarda el historial de cambios de precio*/
 
+IF OBJECT_ID('dbo.auditoria_producto') IS NULL
+BEGIN
 CREATE TABLE dbo.auditoria_producto
 (
   cod_auditoria   INT IDENTITY(1,1) NOT NULL,
@@ -14,12 +16,13 @@ CREATE TABLE dbo.auditoria_producto
   fecha_hora      DATETIME NOT NULL DEFAULT GETDATE(),
   CONSTRAINT PK_auditoria_producto PRIMARY KEY (cod_auditoria)
 );
+END;
 GO
 
 /*trigger que se ejecuta despues de cada UPDATE sobre Producto
   deleted tiene los valores anteriores e inserted los nuevos
   solo se registra si el precio cambio, por eso un cambio de stock no se audita*/
-CREATE TRIGGER dbo.trg_Producto_Update
+CREATE OR ALTER TRIGGER dbo.trg_Producto_Update
 ON dbo.Producto
 AFTER UPDATE
 AS

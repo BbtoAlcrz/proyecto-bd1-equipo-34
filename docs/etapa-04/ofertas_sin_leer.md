@@ -6,17 +6,17 @@ Identifica las notificaciones de promociones o descuentos que fueron enviadas a 
 
 ### Estrategia SQL
 - **`JOINs`**: Vincula `Notificacion` con `Cliente` y `Oferta` para obtener los datos del destinatario y el detalle de la promoción.
-- **Filtro `WHERE` con función temporal**: Filtra por el estado `'ENVIADA'` y evalúa vigencia mediante `o.fecha_finalizacion >= GETDATE()`.
+- **Filtro `WHERE` con función temporal**: Filtra por el estado `'ENVIADA'` y evalúa vigencia: incluye las ofertas sin fecha de finalización (`IS NULL`, vigentes sin límite) y compara contra la fecha actual sin hora (`CAST(GETDATE() AS DATE)`), para que una oferta siga vigente durante todo su último día.
 - **Parametrización**: El estado de notificación y el rango de fechas pueden adaptarse según el ciclo de vida de la campaña de email marketing.
 
 ### Código SQL
-[ofertas_sin_leer.sql](https://github.com/BbtoAlcrz/proyecto-bd1-equipo-34/blob/main/sql/consultas/ofertas_sin_leer.sql.sql)
+[ofertas_sin_leer.sql](https://github.com/BbtoAlcrz/proyecto-bd1-equipo-34/blob/main/sql/consultas/ofertas_sin_leer.sql)
 
 ### Resultado esperado
-(Consulta ejecutada sobre ofertas cuya fecha de finalización es superior a la fecha actual)
+(Resultado al 12/11/2026. Como la vigencia se compara con la fecha actual, el resultado cambia según el día en que se ejecute la consulta.)
 
 | cod_oferta | detalle_oferta | cod_cliente | nombre_cliente | apellido_cliente | estado_notificacion |
 | :---: | :--- | :---: | :--- | :--- | :---: |
+| 1 | 5% OFF en tu primera compra | 1 | Juan | Pérez | ENVIADA |
 | 3 | Especial Verano: 2x1 en musculosas y shorts deportivos | 3 | Carlos | López | ENVIADA |
-| 5 | Especial día de la Madre: 20% OFF en conjuntos deportivos, tops y calzas | 5 | Pedro | Sánchez | ENVIADA |
 | 7 | Combo Rendimiento: 15% OFF llevando PROTEÍNA + CREATINA | 7 | Diego | Romero | ENVIADA |

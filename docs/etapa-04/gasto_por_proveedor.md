@@ -10,7 +10,7 @@ Indentifica proveedores a los cuales se les ha realizado una compra significativ
 - **Filtro de Agregación `HAVING`**: Condiciona el resultado para mostrar solamente a los proveedores cuyo total comprado (`SUM(c.precio_total)`) supere el monto límite establecido.
 
 ### Código SQL
-[gasto_por_proveedor.sql](https://github.com/BbtoAlcrz/proyecto-bd1-equipo-34/blob/main/sql/consultas/gasto_por_proveedor.sql.sql)
+[gasto_por_proveedor.sql](https://github.com/BbtoAlcrz/proyecto-bd1-equipo-34/blob/main/sql/consultas/gasto_por_proveedor.sql)
 
 ### Resultado esperado
 (Filtro aplicado: `HAVING SUM(c.precio_total) > 100000.00`)

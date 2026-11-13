@@ -1,3 +1,6 @@
+USE Proyecto_BD1;
+GO
+
 -- Ofertas / Descuentos
 INSERT INTO Oferta (detalle_oferta, fecha_lanzamiento, fecha_finalizacion) 
 VALUES('5% OFF en tu primera compra', '2026-01-01', NULL);
